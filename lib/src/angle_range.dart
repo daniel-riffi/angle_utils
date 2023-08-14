@@ -2,20 +2,25 @@ import 'angle.dart';
 
 /// Represents an angle range.
 class AngleRange {
-  late Angle _start;
-  late Angle _sweep;
-  late Angle _end;
-  late Angle _mid;
+  late final Angle _start;
+  late final Angle _sweep;
+  late final Angle _end;
+  late final Angle _mid;
 
   Angle get start => _start;
   Angle get sweep => _sweep;
   Angle get end => _end;
   Angle get mid => _mid;
 
+  AngleRange get normalized => AngleRange(start: _start.normalized, end: _end.normalized);
+
   AngleRange({required Angle start, required Angle end}) {
     _start = start;
     _end = end;
-    _sweep = _end - _start;
+    if((_end - _start).abs() > Angle.full()) {
+      throw ArgumentError('Angle range can not be greater than 360 degrees');
+    }
+    _sweep = (_end - _start).normalized;
     _mid = _start + _sweep / 2;
   }
 
@@ -31,15 +36,25 @@ class AngleRange {
     return AngleRange(start: mid - delta, end: mid + delta);
   }
 
-  /// Checks whether the given [angle] is in this angle range
-  /// Note: [from] can be greater than [to], but then the range spans over the angle zero
-  bool includes(Angle angle) {
-    if (_start < _end) {
-      return _start <= angle && angle <= _end;
-    } else if (_start > _end) {
-      return _start <= angle || angle <= _end;
+  factory AngleRange.normalized(Angle start, Angle end) {
+    return AngleRange(start: start.normalized, end: end.normalized);
+  }
+
+  /// Checks whether the given [angle] is in this normalized angle range
+  /// Note: [start] can be greater than [end], but then the range spans over angle zero
+  bool includesNormalized(Angle angle) {
+    var normalizedRange = normalized;
+    var normalizedAngle = angle.normalized;
+    if (normalizedRange.start < normalizedRange.end) {
+      return normalizedRange.start <= normalizedAngle && normalizedAngle <= normalizedRange.end;
+    } else if (normalizedRange.start > normalizedRange.end) {
+      return normalizedRange.start <= normalizedAngle || normalizedAngle <= normalizedRange.end;
     }
-    return angle == _start;
+    return normalizedAngle == normalizedRange.start;
+  }
+
+  bool includes(Angle angle) {
+    return _start <= angle && angle <= _end;
   }
 
   @override
@@ -51,7 +66,5 @@ class AngleRange {
   int get hashCode => Object.hash(_start, _end);
 
   @override
-  String toString() {
-    return 'AngleRange(from: $_start, to: $_end)';
-  }
+  String toString() => '$_start to $_end';
 }

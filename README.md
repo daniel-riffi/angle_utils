@@ -1,39 +1,37 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+## Angle utils
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+A small and compact utility library for dealing with all kinds of angles. This library supports radians, degrees, turns and gradians.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+### Angle
 
 ```dart
-const like = 'sample';
+var angle = Angle.degrees(90);
+angle.radians;  // pi/2
+angle.degrees;  // 90
+angle.gradians; // 100
+angle.turns;    // 1/4
+
+var full = Angle.full();
+full.radians;   // 2*pi
+full.degrees;   // 360
+full.gradians;  // 400
+full.turns;     // 1
+
+var other = Angle.degrees(-10);
+other.normalized.degrees; // 350
 ```
 
-## Additional information
+### AngleRange
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+This library also provides an AngleRange type:
+
+```dart
+var range = AngleRange(start: Angle.degrees(80), end: Angle.degrees(100));
+range.start;    // Angle.degrees(80)
+range.end;      // Angle.degrees(100)
+range.mid;      // Angle.degrees(90)
+range.sweep;    // Angle.degrees(20)
+
+range.includes(Angle.degrees(90)); // true
+range.includes(Angle.degrees(70)); // false
+```
