@@ -12,8 +12,11 @@ class AngleRange {
   Angle get end => _end;
   Angle get mid => _mid;
 
-  AngleRange get normalized => AngleRange(start: _start.normalized, end: _end.normalized);
+  AngleRange get normalized =>
+      AngleRange(start: _start.normalized, end: _end.normalized);
 
+  /// Constructs an angle range from the given [start] and [end] angle
+  /// An angle range can NOT be over 360 degrees
   AngleRange({required Angle start, required Angle end}) {
     _start = start;
     _end = end;
@@ -24,6 +27,7 @@ class AngleRange {
     _mid = _start + _sweep / 2;
   }
 
+  /// Constructs and angle range from a [start] and a [sweep] angle
   factory AngleRange.fromSweep(Angle start, Angle sweep) {
     return AngleRange(start: start, end: start + sweep);
   }
@@ -36,6 +40,7 @@ class AngleRange {
     return AngleRange(start: mid - delta, end: mid + delta);
   }
 
+  /// Constructs an angle range where [start] and [end] are normalized
   factory AngleRange.normalized(Angle start, Angle end) {
     return AngleRange(start: start.normalized, end: end.normalized);
   }
@@ -46,20 +51,25 @@ class AngleRange {
     var normalizedRange = normalized;
     var normalizedAngle = angle.normalized;
     if (normalizedRange.start < normalizedRange.end) {
-      return normalizedRange.start <= normalizedAngle && normalizedAngle <= normalizedRange.end;
+      return normalizedRange.start <= normalizedAngle &&
+          normalizedAngle <= normalizedRange.end;
     } else if (normalizedRange.start > normalizedRange.end) {
-      return normalizedRange.start <= normalizedAngle || normalizedAngle <= normalizedRange.end;
+      return normalizedRange.start <= normalizedAngle ||
+          normalizedAngle <= normalizedRange.end;
     }
     return normalizedAngle == normalizedRange.start;
   }
 
+  /// Checks whether the given [angle] is in this angle range
   bool includes(Angle angle) {
     return _start <= angle && angle <= _end;
   }
 
   @override
   bool operator ==(Object other) {
-    return (other is AngleRange) && other._start == _start && other._end == _end;
+    return (other is AngleRange) &&
+        other._start == _start &&
+        other._end == _end;
   }
 
   @override

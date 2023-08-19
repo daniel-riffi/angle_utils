@@ -26,7 +26,10 @@ class Angle implements Comparable<Angle> {
     }
   }
 
+  /// Returns the complementary angle of this
   Angle get complementary => Angle.a90() - this;
+
+  /// Returns the supplementary angle of this
   Angle get supplementary => Angle.a180() - this;
 
   double get radians => _radians;
@@ -36,21 +39,44 @@ class Angle implements Comparable<Angle> {
 
   Angle._({required double radians}) : _radians = radians;
 
-  Angle.degrees(final double degrees) : _radians = Angle.degreesToRadians(degrees);
+  /// Constructs an angle from degrees
+  Angle.degrees(final double degrees)
+      : _radians = Angle.degreesToRadians(degrees);
+
+  /// Constructs an angle from turns
   Angle.turns(final double turns) : _radians = Angle.turnsToRadians(turns);
-  Angle.gradians(final double gradians) : _radians = Angle.gradiansToRadians(gradians);
+
+  /// Constructs an angle from gradians
+  Angle.gradians(final double gradians)
+      : _radians = Angle.gradiansToRadians(gradians);
+
+  /// Constructs an angle from radians
   Angle.radians(final double radians) : _radians = radians;
 
   Angle.atan2(num a, num b) : _radians = math.atan2(a, b);
 
+  /// Constructs an angle with 0 degrees
   factory Angle.zero() => Angle._(radians: 0);
+
+  /// Constructs an angle with 180 degrees
   factory Angle.half() => Angle._(radians: math.pi);
+
+  /// Constructs an angle with 360 degrees
   factory Angle.full() => Angle._(radians: 2 * math.pi);
 
+  /// Constructs an angle with 0 degrees
   factory Angle.a0() => Angle.zero();
+
+  /// Constructs an angle with 90 degrees
   factory Angle.a90() => Angle._(radians: math.pi / 2);
+
+  /// Constructs an angle with 180 degrees
   factory Angle.a180() => Angle.half();
+
+  /// Constructs an angle with 270 degrees
   factory Angle.a270() => Angle._(radians: 3 * math.pi / 2);
+
+  /// Constructs an angle with 360 degrees
   factory Angle.a360() => Angle.full();
 
   /// Returns the distance between [a] and [b].
@@ -80,7 +106,8 @@ class Angle implements Comparable<Angle> {
 
   @override
   bool operator ==(Object other) {
-    return (other is Angle) && _radians.toPrecision(10) == other._radians.toPrecision(10);
+    return (other is Angle) &&
+        _radians.toPrecision(10) == other._radians.toPrecision(10);
   }
 
   @override
@@ -99,11 +126,14 @@ class Angle implements Comparable<Angle> {
   @override
   String toString() => '${degrees.toStringAsFixed(2)}°';
 
-  static double radiansToDegrees(final double radians) => radians / math.pi * 180;
+  static double radiansToDegrees(final double radians) =>
+      radians / math.pi * 180;
   static double radiansToTurns(final double radians) => radians / (2 * math.pi);
-  static double radiansToGradians(final double radians) => radians / math.pi * 200;
+  static double radiansToGradians(final double radians) =>
+      radians / math.pi * 200;
 
-  static double degreesToRadians(final double degrees) => degrees / 180 * math.pi;
+  static double degreesToRadians(final double degrees) =>
+      degrees / 180 * math.pi;
   static double degreesToTurns(final double degrees) => degrees / 360;
   static double degreesToGradians(final double degrees) => degrees / 180 * 200;
 
@@ -111,7 +141,9 @@ class Angle implements Comparable<Angle> {
   static double turnsToDegrees(final double turns) => turns * 360;
   static double turnsToGradians(final double turns) => turns * 400;
 
-  static double gradiansToRadians(final double gradians) => gradians / 200 * math.pi;
-  static double gradiansToDegrees(final double gradians) => gradians / 200 * 180;
+  static double gradiansToRadians(final double gradians) =>
+      gradians / 200 * math.pi;
+  static double gradiansToDegrees(final double gradians) =>
+      gradians / 200 * 180;
   static double gradiansToTurns(final double gradians) => gradians / 400;
 }

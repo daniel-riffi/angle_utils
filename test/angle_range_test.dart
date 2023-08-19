@@ -54,7 +54,8 @@ void main() {
   });
 
   test('normalized', () {
-    var range = AngleRange(start: Angle.degrees(-10), end: Angle.degrees(-5)).normalized;
+    var range = AngleRange(start: Angle.degrees(-10), end: Angle.degrees(-5))
+        .normalized;
 
     expect(range.start, Angle.degrees(350));
     expect(range.end, Angle.degrees(355));
@@ -89,7 +90,9 @@ void main() {
   });
 
   test('errors', () {
-    expect(() => AngleRange.fromDelta(Angle.degrees(90), Angle.degrees(-10)), throwsArgumentError);
-    expect(() => AngleRange(start: Angle.degrees(0), end: Angle.degrees(370)), throwsArgumentError);
+    expect(() => AngleRange.fromDelta(Angle.degrees(90), Angle.degrees(-10)),
+        throwsArgumentError);
+    expect(() => AngleRange(start: Angle.degrees(0), end: Angle.degrees(370)),
+        throwsArgumentError);
   });
 }

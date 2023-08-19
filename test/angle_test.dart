@@ -17,25 +17,30 @@ void main() {
       expect(angle0.turns, 0);
     });
 
-    test('.radians(pi/2) should equal 90 degrees, 100 gradians and 0.25 turns', () {
+    test('.radians(pi/2) should equal 90 degrees, 100 gradians and 0.25 turns',
+        () {
       expect(angle90.degrees, 90.0);
       expect(angle90.gradians, 100);
       expect(angle90.turns, 0.25);
     });
 
-    test('.degrees(180) should equal pi radians, 200 gradians and 0.5 turns', () {
+    test('.degrees(180) should equal pi radians, 200 gradians and 0.5 turns',
+        () {
       expect(angle180.radians, math.pi);
       expect(angle180.gradians, 200);
       expect(angle180.turns, 0.5);
     });
 
-    test('.gradians(300) should equal 3*pi/2 radians, 270 degrees and 0.75 turns', () {
+    test(
+        '.gradians(300) should equal 3*pi/2 radians, 270 degrees and 0.75 turns',
+        () {
       expect(angle270.radians, 3 * math.pi / 2);
       expect(angle270.degrees, 270);
       expect(angle270.turns, 0.75);
     });
 
-    test('.turns(1) should equal 2*pi radians, 400 gradians and 360 degrees', () {
+    test('.turns(1) should equal 2*pi radians, 400 gradians and 360 degrees',
+        () {
       expect(angle360.radians, 2 * math.pi);
       expect(angle360.gradians, 400);
       expect(angle360.degrees, 360);
@@ -69,10 +74,14 @@ void main() {
 
   test('.distance', () {
     expect(Angle.getMinimalDistance(Angle.a0(), Angle.a90()), Angle.a90());
-    expect(Angle.getMinimalDistance(Angle.degrees(45), Angle.degrees(75)), Angle.degrees(30));
-    expect(Angle.getMinimalDistance(Angle.degrees(270), Angle.degrees(180)), Angle.a90());
-    expect(Angle.getMinimalDistance(Angle.degrees(350), Angle.degrees(10)), Angle.degrees(20));
-    expect(Angle.getMinimalDistance(Angle.degrees(-90), Angle.degrees(45)), Angle.degrees(135));
+    expect(Angle.getMinimalDistance(Angle.degrees(45), Angle.degrees(75)),
+        Angle.degrees(30));
+    expect(Angle.getMinimalDistance(Angle.degrees(270), Angle.degrees(180)),
+        Angle.a90());
+    expect(Angle.getMinimalDistance(Angle.degrees(350), Angle.degrees(10)),
+        Angle.degrees(20));
+    expect(Angle.getMinimalDistance(Angle.degrees(-90), Angle.degrees(45)),
+        Angle.degrees(135));
   });
 
   test('.abs', () {

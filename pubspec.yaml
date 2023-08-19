@@ -1,6 +1,6 @@
 name: angle_utils
 description: A small and compact utility library for dealing with all kinds of angles
-version: 0.0.1
+version: 0.0.3
 repository: https://github.com/daniel-riffi/angle_utils
 
 environment:

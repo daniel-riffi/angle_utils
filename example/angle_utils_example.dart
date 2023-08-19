@@ -13,6 +13,9 @@ void main() {
   full.gradians; // 400
   full.turns; // 1
 
+  var diff = full - angle;
+  diff.degrees; // 270
+
   var other = Angle.degrees(-10);
   other.normalized.degrees; // 350
 
