@@ -13,12 +13,15 @@ class Angle implements Comparable<Angle> {
   bool get isPositive => _radians >= 0;
   bool get isNegative => _radians < 0;
 
+  /// Returns the normalized angle:
+  /// 45° -> 45°
+  /// 370° -> 10°
+  /// -90° -> 270°
   Angle get normalized {
-    var remainder = _radians.remainder(2*math.pi);
-    if(isPositive) {
+    var remainder = _radians.remainder(2 * math.pi);
+    if (isPositive) {
       return Angle.radians(remainder);
-    }
-    else {
+    } else {
       return Angle.full() + Angle.radians(remainder);
     }
   }
@@ -38,14 +41,14 @@ class Angle implements Comparable<Angle> {
   Angle.gradians(final double gradians) : _radians = Angle.gradiansToRadians(gradians);
   Angle.radians(final double radians) : _radians = radians;
 
-  Angle.atan2(num a, num b): _radians = math.atan2(a, b);
+  Angle.atan2(num a, num b) : _radians = math.atan2(a, b);
 
   factory Angle.zero() => Angle._(radians: 0);
   factory Angle.half() => Angle._(radians: math.pi);
-  factory Angle.full() => Angle._(radians: 2*math.pi);
+  factory Angle.full() => Angle._(radians: 2 * math.pi);
 
   factory Angle.a0() => Angle.zero();
-  factory Angle.a90() => Angle._(radians: math.pi/2);
+  factory Angle.a90() => Angle._(radians: math.pi / 2);
   factory Angle.a180() => Angle.half();
   factory Angle.a270() => Angle._(radians: 3 * math.pi / 2);
   factory Angle.a360() => Angle.full();
@@ -55,7 +58,7 @@ class Angle implements Comparable<Angle> {
   static Angle getMinimalDistance(Angle a, Angle b) {
     // min{|α−β|, 360° −|α−β|}
     var diff = (a.normalized.radians - b.normalized.radians).abs();
-    return Angle._(radians: math.min(diff, 2*math.pi - diff));
+    return Angle._(radians: math.min(diff, 2 * math.pi - diff));
   }
 
   Angle abs() => Angle._(radians: _radians.abs());

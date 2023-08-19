@@ -17,7 +17,7 @@ class AngleRange {
   AngleRange({required Angle start, required Angle end}) {
     _start = start;
     _end = end;
-    if((_end - _start).abs() > Angle.full()) {
+    if ((_end - _start).abs() > Angle.full()) {
       throw ArgumentError('Angle range can not be greater than 360 degrees');
     }
     _sweep = (_end - _start).normalized;
@@ -30,7 +30,7 @@ class AngleRange {
 
   /// Constructs an angle range from the given [mid] angle by adding and substracting [delta].
   factory AngleRange.fromDelta(Angle mid, Angle delta) {
-    if(delta.isNegative) {
+    if (delta.isNegative) {
       throw ArgumentError('Delta angle must be positiv');
     }
     return AngleRange(start: mid - delta, end: mid + delta);
