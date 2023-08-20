@@ -116,4 +116,22 @@ void main() {
     expect(Angle.degrees(-10) / 5, Angle.degrees(-2));
     expect(Angle.degrees(-50) / -2, Angle.degrees(25));
   });
+
+  test('ratio', () {
+    expect(Angle.a90().ratio(Angle.a180()), 0.5);
+    expect(Angle.a180().ratio(Angle.a180()), 1);
+    expect(Angle.a180().ratio(Angle.a90()), 2);
+    expect(Angle.a360().ratio(Angle.a90()), 4);
+  });
+
+  test('getClosest', () {
+    var angles = [Angle.degrees(45), Angle.degrees(90), Angle.degrees(135), Angle.degrees(245), Angle.degrees(350)];
+    expect(Angle.degrees(10).getClosest(angles), Angle.degrees(350));
+    expect(Angle.degrees(30).getClosest(angles), Angle.degrees(45));
+    expect(Angle.degrees(60).getClosest(angles), Angle.degrees(45));
+    expect(Angle.degrees(100).getClosest(angles), Angle.degrees(90));
+    expect(Angle.degrees(135).getClosest(angles), Angle.degrees(135));
+    expect(Angle.degrees(200).getClosest(angles), Angle.degrees(245));
+    expect(Angle.degrees(360).getClosest(angles), Angle.degrees(350));
+  });
 }

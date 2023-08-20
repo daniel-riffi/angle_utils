@@ -1,3 +1,6 @@
+## 0.0.4
+- Added ratio and getClosest function
+
 ## 0.0.3
 - More documentation
 

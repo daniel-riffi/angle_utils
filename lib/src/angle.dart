@@ -40,15 +40,13 @@ class Angle implements Comparable<Angle> {
   Angle._({required double radians}) : _radians = radians;
 
   /// Constructs an angle from degrees
-  Angle.degrees(final double degrees)
-      : _radians = Angle.degreesToRadians(degrees);
+  Angle.degrees(final double degrees) : _radians = Angle.degreesToRadians(degrees);
 
   /// Constructs an angle from turns
   Angle.turns(final double turns) : _radians = Angle.turnsToRadians(turns);
 
   /// Constructs an angle from gradians
-  Angle.gradians(final double gradians)
-      : _radians = Angle.gradiansToRadians(gradians);
+  Angle.gradians(final double gradians) : _radians = Angle.gradiansToRadians(gradians);
 
   /// Constructs an angle from radians
   Angle.radians(final double radians) : _radians = radians;
@@ -87,6 +85,21 @@ class Angle implements Comparable<Angle> {
     return Angle._(radians: math.min(diff, 2 * math.pi - diff));
   }
 
+  /// Gets the closest angle out of [angles] to this.
+  /// [angles] must contain at least one angle
+  /// IMPORTANT: All angles are normalized!
+  Angle getClosest(final List<Angle> angles) {
+    if(angles.isEmpty) {
+      throw ArgumentError('Angle list must contain at least one angle');
+    }
+    return angles.fold(angles[0], (previousAngle, currentAngle) {
+      if (Angle.getMinimalDistance(this, currentAngle) < Angle.getMinimalDistance(this, previousAngle)) {
+        return currentAngle;
+      }
+      return previousAngle;
+    });
+  }
+
   Angle abs() => Angle._(radians: _radians.abs());
 
   double sin() => math.sin(_radians);
@@ -99,6 +112,8 @@ class Angle implements Comparable<Angle> {
   Angle operator /(num divisor) => Angle._(radians: _radians / divisor);
   Angle operator *(dynamic factor) => Angle._(radians: _radians * factor);
 
+  double ratio(final Angle other) => radians / other.radians;
+
   bool operator >(Angle other) => _radians > other.radians;
   bool operator <(Angle other) => _radians < other.radians;
   bool operator >=(Angle other) => _radians >= other.radians;
@@ -106,8 +121,7 @@ class Angle implements Comparable<Angle> {
 
   @override
   bool operator ==(Object other) {
-    return (other is Angle) &&
-        _radians.toPrecision(10) == other._radians.toPrecision(10);
+    return (other is Angle) && _radians.toPrecision(10) == other._radians.toPrecision(10);
   }
 
   @override
@@ -126,14 +140,11 @@ class Angle implements Comparable<Angle> {
   @override
   String toString() => '${degrees.toStringAsFixed(2)}°';
 
-  static double radiansToDegrees(final double radians) =>
-      radians / math.pi * 180;
+  static double radiansToDegrees(final double radians) => radians / math.pi * 180;
   static double radiansToTurns(final double radians) => radians / (2 * math.pi);
-  static double radiansToGradians(final double radians) =>
-      radians / math.pi * 200;
+  static double radiansToGradians(final double radians) => radians / math.pi * 200;
 
-  static double degreesToRadians(final double degrees) =>
-      degrees / 180 * math.pi;
+  static double degreesToRadians(final double degrees) => degrees / 180 * math.pi;
   static double degreesToTurns(final double degrees) => degrees / 360;
   static double degreesToGradians(final double degrees) => degrees / 180 * 200;
 
@@ -141,9 +152,7 @@ class Angle implements Comparable<Angle> {
   static double turnsToDegrees(final double turns) => turns * 360;
   static double turnsToGradians(final double turns) => turns * 400;
 
-  static double gradiansToRadians(final double gradians) =>
-      gradians / 200 * math.pi;
-  static double gradiansToDegrees(final double gradians) =>
-      gradians / 200 * 180;
+  static double gradiansToRadians(final double gradians) => gradians / 200 * math.pi;
+  static double gradiansToDegrees(final double gradians) => gradians / 200 * 180;
   static double gradiansToTurns(final double gradians) => gradians / 400;
 }
